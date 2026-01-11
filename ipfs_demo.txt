@@ -1,0 +1,54 @@
+Terminal1 User A
+
+export IPFS_PATH=~/ipfs_userA/.ipfs
+ipfs init
+ipfs config Addresses.API /ip4/127.0.0.1/tcp/5001
+ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8080
+ipfs daemon
+
+Terminal1 User B
+
+export IPFS_PATH=~/ipfs_userB/.ipfs
+ipfs init
+ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002
+ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8081
+ipfs daemon
+
+Terminal1 User C
+
+export IPFS_PATH=~/ipfs_userC/.ipfs
+ipfs init
+ipfs config Addresses.API /ip4/127.0.0.1/tcp/5003
+ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8082
+ipfs daemon
+
+Terminal2 User A
+
+export IPFS_PATH=~/ipfs_userA/.ipfs
+echo "Ceci est un document secret" > testfile.txt
+ipfs add testfile.txt
+
+#On Remix Desktop
+
+deploy smart contract
+create document with new CID -> docID
+Put User B and C with role of reader/editor/validator depending on the test
+
+Terminal2 User B
+
+#On Remix Desktop
+retrieve CID (called here Y) using the docID
+
+#On terminal
+export IPFS_PATH=~/ipfs_userB/.ipfs
+ipfs cat Y > received.txt
+
+Terminal2 User C
+
+#On Remix Desktop try to modify using function and try to read
+#-> error from reading
+
+#In case where B gave Y to C
+export IPFS_PATH=~/ipfs_userC/.ipfs
+ipfs cat Y > received.txt
+#File still retrieved where C wasn't allowed to
